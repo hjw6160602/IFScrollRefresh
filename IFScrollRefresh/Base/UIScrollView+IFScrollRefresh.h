@@ -12,6 +12,8 @@
 @interface UIScrollView (IFScrollRefresh)
 
 /** 下拉刷新控件 */
-@property (strong, nonatomic) IFScrollRefreshHeader *if_header;
+@property (nonatomic, strong) IFScrollRefreshHeader *if_header;
+/** if_header的高度*/
+@property (nonatomic, assign) CGFloat if_headerHeight;
 
 @end

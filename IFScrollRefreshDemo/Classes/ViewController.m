@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "IFScrollRefresh.h"
 
+#import "IFScrollRefreshHeader.h"
+
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
@@ -21,12 +23,8 @@
 }
 
 - (void)demo{
-//    UIView *header = [[UIView alloc]initWithFrame:self.view.bounds];
-//    self.tableView.if_header = header;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+    UIView *header = [[UIView alloc]initWithFrame:self.view.bounds];
+    self.tableView.if_header = header;
 }
 
 #pragma mark <UITableViewDataSource>
