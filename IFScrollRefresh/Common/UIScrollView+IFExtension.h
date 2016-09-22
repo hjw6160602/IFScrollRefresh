@@ -1,5 +1,5 @@
 //
-//  UIScrollView+Extension.h
+//  UIScrollView+IFExtension.h
 //  IFScrollRefreshDemo
 //
 //  Created by SaiDicaprio. on 16/9/22.

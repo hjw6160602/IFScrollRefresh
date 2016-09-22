@@ -1,15 +1,15 @@
 //
-//  UIScrollView+Extension.m
+//  UIScrollView+IFExtension.m
 //  IFScrollRefreshDemo
 //
 //  Created by SaiDicaprio. on 16/9/22.
 //  Copyright © 2016年 SaiDicaprio. All rights reserved.
 //
 
-#import "UIScrollView+Extension.h"
+#import "UIScrollView+IFExtension.h"
 #import <objc/runtime.h>
 
-@implementation UIScrollView (IFExtension)
+@implementation UIScrollView (IFIFExtension)
 
 - (void)setIf_insetT:(CGFloat)if_insetT
 {

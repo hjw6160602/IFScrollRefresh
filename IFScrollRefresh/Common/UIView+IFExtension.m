@@ -6,7 +6,7 @@
 //  Copyright © 2016年 SaiDicaprio. All rights reserved.
 //
 
-#import "UIView+Extension.h"
+#import "UIView+IFExtension.h"
 
 @implementation UIView (IFExtension)
 

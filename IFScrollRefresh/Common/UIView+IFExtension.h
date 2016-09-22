@@ -1,5 +1,5 @@
 // 
-//  UIView+Extension.h
+//  UIView+IFExtension.h
 //  IFScrollRefreshDemo
 //
 //  Created by SaiDicaprio. on 16/9/22.
