@@ -17,12 +17,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self demo];
+}
+
+- (void)demo{
+//    UIView *header = [[UIView alloc]initWithFrame:self.view.bounds];
+//    self.tableView.if_header = header;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark <UITableViewDataSource>
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 25;
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [UITableViewCell new];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"第%ld行：我是打酱油的数据",indexPath.row];
+    return cell;
+    
+}
+
+#pragma mark <UITableViewDelegate>
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
 
 @end

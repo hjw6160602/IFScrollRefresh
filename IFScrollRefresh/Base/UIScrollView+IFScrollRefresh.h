@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class IFScrollRefreshHeader;
 
 @interface UIScrollView (IFScrollRefresh)
+
+/** 下拉刷新控件 */
+@property (strong, nonatomic) IFScrollRefreshHeader *if_header;
 
 @end
