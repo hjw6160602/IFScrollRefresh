@@ -5,6 +5,7 @@
 
 #import "UIScrollView+IFScrollRefresh.h"
 #import "UIScrollView+IFExtension.h"
-#import "UIView+IFExtension.h"
 
+#import "IFScrollRefreshHeader.h"
+#import "UIView+IFExtension.h"
 

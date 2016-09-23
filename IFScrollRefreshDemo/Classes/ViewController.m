@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 #import "IFScrollRefresh.h"
-
-#import "IFScrollRefreshHeader.h"
+#import "NSObject+IFExtension.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -20,11 +19,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self demo];
+    [self test];
+}
+
+- (void)test{
+    for (NSString *ivar in [UITableView getIvarNameList])
+        NSLog(@"%@",ivar);
+
+    UIView *wrapperView = [self.tableView valueForKey:@"_wrapperView"];
+    NSLog(@"%@", NSStringFromCGRect(wrapperView.frame));
 }
 
 - (void)demo{
-    UIView *header = [[UIView alloc]initWithFrame:self.view.bounds];
-    self.tableView.if_header = header;
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
+    IFScrollRefreshHeader *ifHeader = [[IFScrollRefreshHeader alloc]initWithFrame:self.view.bounds];
+    ifHeader.backgroundColor = [UIColor redColor];
+    self.tableView.if_header = ifHeader;
+    
+    UIView *tableHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.if_w, 200)];
+    tableHeader.backgroundColor = [UIColor blueColor];
+    self.tableView.tableHeaderView = tableHeader;
+    
+    
+    
+//    NSLog([self.tableView superview])
 }
 
 #pragma mark <UITableViewDataSource>

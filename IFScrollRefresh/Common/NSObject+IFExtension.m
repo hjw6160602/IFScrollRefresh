@@ -1,18 +1,35 @@
 //
-//  NSObject+IF_MethodSwizzling.m
+//  NSObject+IFExtension.m
 //  IFScrollRefreshDemo
 //
-//  Created by liuwy on 16/9/22.
+//  Created by liuwy on 16/9/23.
 //  Copyright © 2016年 MetYourMakers. All rights reserved.
 //
 
-#import "NSObject+IF_MethodSwizzling.h"
+#import "NSObject+IFExtension.h"
 #import <objc/runtime.h>
 
-@implementation NSObject (IF_MethodSwizzling)
+@implementation NSObject (Extension)
 
-+ (void)yz_swizzleInstanceSelector:(SEL)origSelector
-                   swizzleSelector:(SEL)swizzleSelector {
++ (NSArray<NSString *> *)getIvarNameList{
+    unsigned int outCount, i;
+    NSMutableArray *ivarsArr = [NSMutableArray arrayWithCapacity:1];
+    objc_property_t *properties = class_copyPropertyList([self class], &outCount);
+    for (i = 0; i<outCount; i++){
+        objc_property_t property = properties[i];
+        const char* char_f = property_getName(property);
+        NSString *propertyName = [NSString stringWithUTF8String:char_f];
+        NSString *ivarName = [NSString stringWithFormat:@"_%@",propertyName];
+        [ivarsArr addObject:ivarName];
+    }
+    return [ivarsArr copy];
+}
+
+@end
+
+@implementation NSObject (IF_MethodSwizzling)
++ (void)if_swizzleInstanceSelector:(SEL)origSelector
+swizzleSelector:(SEL)swizzleSelector {
     
     // 获取原有方法
     Method origMethod = class_getInstanceMethod(self,
@@ -34,7 +51,7 @@
     }
 }
 
-+ (void)yz_swizzleClassSelector:(SEL)origSelector swizzleSelector:(SEL)swizzleSelector
++ (void)if_swizzleClassSelector:(SEL)origSelector swizzleSelector:(SEL)swizzleSelector
 {
     // 获取原有方法
     Method origMethod = class_getClassMethod(self,
@@ -50,6 +67,4 @@
         method_exchangeImplementations(origMethod, swizzleMethod);
     }
 }
-
-
 @end
