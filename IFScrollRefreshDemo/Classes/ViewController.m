@@ -33,6 +33,13 @@
 - (void)demo{
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     IFScrollRefreshHeader *ifHeader = [IFScrollRefreshHeader headerWithFrame:self.view.bounds];
+    
+    NSMutableArray *imgNames = [NSMutableArray arrayWithCapacity:1];
+    for(NSInteger index = 1; index < 7; index++){
+        NSString *imgName = [NSString stringWithFormat:@"page%ld",index];
+        [imgNames addObject:imgName];
+    }
+    ifHeader.imgNames = imgNames;
     ifHeader.backgroundColor = [UIColor redColor];
     self.tableView.if_header = ifHeader;
     

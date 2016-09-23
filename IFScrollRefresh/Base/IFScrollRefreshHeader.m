@@ -6,14 +6,28 @@
 //  Copyright © 2016年 MetYourMakers. All rights reserved.
 //
 
-#import "IFScrollRefreshHeader.h"
 #import "UIView+IFExtension.h"
+#import "IFScrollRefreshHeader.h"
+#import "IFCollectionViewController.h"
+
+@interface IFScrollRefreshHeader ()
+@property (nonatomic, strong) IFCollectionViewController *collectionViewController;
+@end
 
 @implementation IFScrollRefreshHeader
 
 + (instancetype)headerWithFrame:(CGRect)frame{
     IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]initWithFrame:frame];
     return header;
+}
+
+#pragma mark - lazy
+- (IFCollectionViewController *)collectionViewController{
+    if (!_collectionViewController) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+        _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:layout];
+    }
+    return _collectionViewController;
 }
 
 #pragma mark - 覆盖父类的方法
@@ -25,6 +39,26 @@
 //    }
     // 设置y值(当自己的高度发生改变了，肯定要重新调整Y值，所以放到placeSubviews方法中设置y值)
 //    self.if_y = - self.if_h - self.ignoredScrollViewContentInsetTop;
+}
+
+#pragma mark - setter
+- (void)setImgNames:(NSArray *)imgNames{
+    _imgNames = [imgNames copy];
+    NSMutableArray *imgs = [NSMutableArray arrayWithCapacity:1];
+    for (NSString *imgName in imgNames) {
+        UIImage *img = [UIImage imageNamed:imgName];
+        [imgs addObject:img];
+    }
+    self.collectionViewController.images = imgs;
+    UIView *view = self.collectionViewController.collectionView;
+    [self addSubview:view];
+    //利用VFL添加约束
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *dict = @{@"view": view};
+    NSMutableArray *cons = [NSMutableArray arrayWithCapacity:1];
+    [cons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:dict]];
+    [cons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:dict]];
+    [self addConstraints:cons];
 }
 
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change{
