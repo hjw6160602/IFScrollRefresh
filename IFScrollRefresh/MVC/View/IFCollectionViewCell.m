@@ -13,14 +13,16 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]){
-        [self setupUI];
+
     }
     return self;
 }
 
-- (void)setupUI{
-    UIImageView *imgView = [[UIImageView alloc]initWithImage:self.image];
-    imgView.frame = self.bounds;
+- (void)setImage:(UIImage *)image{
+    _image = image;
+    UIImageView *imgView = [[UIImageView alloc]initWithFrame:self.bounds];
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
+    imgView.image = self.image;
     [self addSubview:imgView];
 }
 

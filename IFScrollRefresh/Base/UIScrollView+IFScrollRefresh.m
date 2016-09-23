@@ -56,10 +56,10 @@ static CGFloat const DefaultIFHeaderViewHeight = 200;
 #pragma mark - setter
 - (void)setIf_header:(IFScrollRefreshHeader *)if_header{
     objc_setAssociatedObject(self, IFHeaderViewKey, if_header, OBJC_ASSOCIATION_ASSIGN);
-    if_header.if_h = 200;
+    if_header.if_h = self.if_headerHeight;
     
     if ([self isKindOfClass:[UITableView class]]) {
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, self.if_headerHeight)];
         headerView.backgroundColor = [UIColor clearColor];
         UITableView *tableView = (UITableView *)self;
         tableView.tableHeaderView = headerView;
