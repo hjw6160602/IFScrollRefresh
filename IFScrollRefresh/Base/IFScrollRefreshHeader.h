@@ -6,8 +6,10 @@
 //  Copyright © 2016年 MetYourMakers. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "IFScrollRereshComponent.h"
 
-@interface IFScrollRefreshHeader : UIView
+@interface IFScrollRefreshHeader : IFScrollRereshComponent
+
++ (instancetype)headerWithFrame:(CGRect)frame;
 
 @end

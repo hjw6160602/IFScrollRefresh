@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self demo];
-    [self test];
+//    [self test];
 }
 
 - (void)test{
@@ -32,17 +32,13 @@
 
 - (void)demo{
     self.tableView.backgroundColor = [UIColor darkGrayColor];
-    IFScrollRefreshHeader *ifHeader = [[IFScrollRefreshHeader alloc]initWithFrame:self.view.bounds];
+    IFScrollRefreshHeader *ifHeader = [IFScrollRefreshHeader headerWithFrame:self.view.bounds];
     ifHeader.backgroundColor = [UIColor redColor];
     self.tableView.if_header = ifHeader;
     
-    UIView *tableHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.if_w, 200)];
-    tableHeader.backgroundColor = [UIColor blueColor];
-    self.tableView.tableHeaderView = tableHeader;
-    
-    
-    
-//    NSLog([self.tableView superview])
+//    UIView *tableHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.if_w, 200)];
+//    tableHeader.backgroundColor = [UIColor blueColor];
+//    self.tableView.tableHeaderView = tableHeader;
 }
 
 #pragma mark <UITableViewDataSource>

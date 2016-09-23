@@ -9,6 +9,7 @@
 #import "UIScrollView+IFScrollRefresh.h"
 #import "UIScrollView+IFExtension.h"
 #import "IFScrollRefreshHeader.h"
+#import "NSObject+IFExtension.h"
 #import "UIView+IFExtension.h"
 #import <objc/runtime.h>
 
@@ -19,6 +20,26 @@ static char * const IFHeaderViewHeightKey = "IFHeaderViewHeightKey";
 static CGFloat const DefaultIFHeaderViewHeight = 200;
 
 @implementation UIScrollView (IFScrollRefresh)
+
++ (void)load{
+    [self if_swizzleInstanceSelector:@selector(setTableHeaderView:) swizzleSelector:@selector(setIf_TableHeaderView:)];
+}
+
+// 拦截通过代码设置tableView头部视图
+- (void)setIf_TableHeaderView:(UIView *)tableHeaderView{
+    // 不是UITableView,就不需要做下面的事情
+    if (![self isMemberOfClass:[UITableView class]]) return;
+    
+    // 设置tableView头部视图
+    [self setIf_TableHeaderView:tableHeaderView];
+    
+    // 设置头部视图的位置
+    UITableView *tableView = (UITableView *)self;
+    
+    self.if_headerHeight = tableView.tableHeaderView.if_h;
+}
+
+
 
 #pragma mark - getter
 - (UIView *)if_header{
@@ -35,7 +56,14 @@ static CGFloat const DefaultIFHeaderViewHeight = 200;
 #pragma mark - setter
 - (void)setIf_header:(IFScrollRefreshHeader *)if_header{
     objc_setAssociatedObject(self, IFHeaderViewKey, if_header, OBJC_ASSOCIATION_ASSIGN);
-    if_header.frame = CGRectMake(0, 0, self.if_w, self.if_headerHeight);
+    if_header.if_h = 200;
+    
+    if ([self isKindOfClass:[UITableView class]]) {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
+        headerView.backgroundColor = [UIColor clearColor];
+        UITableView *tableView = (UITableView *)self;
+        tableView.tableHeaderView = headerView;
+    }
     
     [self insertSubview:if_header atIndex:0];
 }
@@ -47,10 +75,9 @@ static CGFloat const DefaultIFHeaderViewHeight = 200;
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-//    self.if_offsetY = -self.if_headerHeight;
+//    self.if_offsetY = -10;
     
 }
-
 
 //- (void)setupHeaderViewFrame
 //{
