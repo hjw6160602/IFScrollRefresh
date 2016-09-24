@@ -22,7 +22,7 @@ static NSString * const reuserID = @"imgItemReuseID";
     if (self = [super initWithCollectionViewLayout:layout]){
         [self.collectionView registerClass:[IFCollectionViewCell class] forCellWithReuseIdentifier:reuserID];
         self.collectionView.pagingEnabled = YES;
-        self.collectionView.showsHorizontalScrollIndicator = NO;
+//        self.collectionView.showsHorizontalScrollIndicator = NO;
         UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)layout;
         flowLayout.itemSize = self.collectionView.if_size;
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

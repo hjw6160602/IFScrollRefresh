@@ -20,6 +20,17 @@ static CGFloat const AspectRatio = 1.183;
 
 @implementation ViewController
 
+#pragma mark - LifeCycle
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    //为tableView添加if_header
+    self.tableView.if_header = [IFScrollRefreshHeader headerWithImageNames:self.imgNames Height:self.view.if_w / AspectRatio];
+    
+    //为tableView添加真正的tableHeaderView
+    [self setupTableHeaderView];
+}
+
 #pragma mark - Lazy
 - (NSArray<NSString *> *)imgNames{
     if (!_imgNames) {
@@ -32,16 +43,6 @@ static CGFloat const AspectRatio = 1.183;
     }
     return _imgNames;
 }
-
-#pragma mark - LifeCycle
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    //为tableView添加if_header
-    self.tableView.if_header = [IFScrollRefreshHeader headerWithImageNames:self.imgNames Height:self.view.if_w / AspectRatio];
-    //为tableView添加真正的tableHeaderView
-    [self setupTableHeaderView];
-}
-
 - (void)tempDisplay{
     for (NSString *ivar in [UITableView getIvarNameList])
         NSLog(@"%@",ivar);
