@@ -19,18 +19,28 @@
 
 @implementation IFScrollRefreshHeader
 
-+ (instancetype)headerWithImageNames:(NSArray *)imgNames Height:(CGFloat)height{
++ (instancetype)headerWithImageNames:(NSArray *)imgNames AspectRatio:(CGFloat)aspectRatio{
+//    CGFloat height = 375 / aspectRatio;
+//    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]initWithFrame:CGRectMake(0, 0, 375, height)];
+    
     IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]init];
     header.imgNames = imgNames;
-    header.if_h = height;
+    header.if_h = 270.5;
+    
     return header;
 }
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+    }
+    return self;
+}
+
 
 #pragma mark - lazy
 - (IFCollectionViewController *)collectionViewController{
     if (!_collectionViewController) {
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-        _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:layout];
+        _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
     }
     return _collectionViewController;
 }
@@ -55,11 +65,11 @@
         [imgs addObject:img];
     }
     self.collectionViewController.images = imgs;
-    UIView *view = self.collectionViewController.collectionView;
-    [self addSubview:view];
+    UIView *collectionView = self.collectionViewController.collectionView;
+    [self addSubview:collectionView];
     //利用VFL添加约束
-    view.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *dict = @{@"view": view};
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *dict = @{@"view": collectionView};
     NSMutableArray *cons = [NSMutableArray arrayWithCapacity:1];
     [cons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:dict]];
     [cons addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:dict]];

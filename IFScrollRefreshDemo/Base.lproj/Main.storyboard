@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -29,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="zRG-e9-B3R" secondAttribute="trailing" constant="-20" id="KNb-FH-Dca"/>
-                            <constraint firstItem="zRG-e9-B3R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Ynw-q2-Xn0"/>
-                            <constraint firstItem="zRG-e9-B3R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="l3v-bD-8sd"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zRG-e9-B3R" secondAttribute="bottom" id="vYR-Hn-NOR"/>
+                            <constraint firstAttribute="trailing" secondItem="zRG-e9-B3R" secondAttribute="trailing" id="Huc-rD-AF9"/>
+                            <constraint firstItem="zRG-e9-B3R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="brE-qN-pHn"/>
+                            <constraint firstItem="zRG-e9-B3R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="psA-BR-X99"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zRG-e9-B3R" secondAttribute="bottom" id="vlW-U4-XZa"/>
                         </constraints>
                     </view>
                     <connections>
@@ -41,7 +40,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="360" y="372"/>
+            <point key="canvasLocation" x="360" y="371.83098591549293"/>
         </scene>
     </scenes>
 </document>

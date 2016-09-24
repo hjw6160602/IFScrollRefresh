@@ -9,7 +9,7 @@
 #import "IFScrollRereshComponent.h"
 
 @interface IFScrollRefreshHeader : IFScrollRereshComponent
-
-+ (instancetype)headerWithImageNames:(NSArray *)imgNames Height:(CGFloat)height;
+/** 根据传入的 图片名字数组和图片宽高比来创建图片 */
++ (instancetype)headerWithImageNames:(NSArray *)imgNames AspectRatio:(CGFloat)aspectRatio;
 
 @end
