@@ -20,12 +20,12 @@
 @implementation IFScrollRefreshHeader
 
 + (instancetype)headerWithImageNames:(NSArray *)imgNames AspectRatio:(CGFloat)aspectRatio{
-//    CGFloat height = 375 / aspectRatio;
-//    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]initWithFrame:CGRectMake(0, 0, 375, height)];
+    CGFloat height = 320 / aspectRatio;
+    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     
-    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]init];
+//    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]init];
     header.imgNames = imgNames;
-    header.if_h = 270.5;
+//    header.if_h = 270.5;
     
     return header;
 }
@@ -40,7 +40,15 @@
 #pragma mark - lazy
 - (IFCollectionViewController *)collectionViewController{
     if (!_collectionViewController) {
-        _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:[UICollectionViewFlowLayout new]];
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+//        NSInteger w = (NSInteger) self.if_w + 0.5;
+//        NSInteger h = (NSInteger) self.if_h + 0.5;
+//        layout.itemSize = CGSizeMake(w, h);
+        layout.itemSize = self.if_size;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        layout.minimumLineSpacing = 0;
+        
+        _collectionViewController = [[IFCollectionViewController alloc]initWithCollectionViewLayout:layout];
     }
     return _collectionViewController;
 }

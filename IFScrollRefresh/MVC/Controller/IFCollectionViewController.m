@@ -24,12 +24,6 @@ static NSString * const reuserID = @"imgItemReuseID";
 }
 
 - (void)setupCollectionView{
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-    flowLayout.itemSize = self.collectionView.if_size;
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.minimumInteritemSpacing = 0;
-    
     [self.collectionView registerClass:[IFCollectionViewCell class] forCellWithReuseIdentifier:reuserID];
     self.collectionView.pagingEnabled = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -49,7 +43,6 @@ static NSString * const reuserID = @"imgItemReuseID";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     IFCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuserID forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor orangeColor];
     cell.image = self.images[indexPath.item];
     return cell;
 }

@@ -63,6 +63,11 @@ static CGFloat const ASPECT_RATIO = 1.183;
 //    [self setupTableHeader];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)tempDisplay{
     for (NSString *ivar in [UITableView getIvarNameList])
         NSLog(@"%@",ivar);
