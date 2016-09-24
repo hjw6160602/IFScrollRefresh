@@ -38,9 +38,9 @@
     
     if (newSuperview) { // 新的父控件
         // 设置宽度
+        self.if_x = 0;
+        self.if_y = - self.if_h;
         self.if_w = newSuperview.if_w;
-        // 设置位置
-        self.if_origin = CGPointZero;
         
         // 记录UIScrollView
         _scrollView = (UIScrollView *)newSuperview;

@@ -27,7 +27,7 @@ static NSString * const reuserID = @"imgItemReuseID";
         flowLayout.itemSize = self.collectionView.if_size;
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         flowLayout.minimumLineSpacing = 0;
-        self.collectionView.backgroundColor = [UIColor whiteColor];
+        self.collectionView.backgroundColor = [UIColor greenColor];
     }
     return self;
 }

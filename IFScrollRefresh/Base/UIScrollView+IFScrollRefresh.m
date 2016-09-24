@@ -9,7 +9,6 @@
 #import "UIScrollView+IFScrollRefresh.h"
 #import "UIScrollView+IFExtension.h"
 #import "IFScrollRefreshHeader.h"
-#import "NSObject+IFExtension.h"
 #import "UIView+IFExtension.h"
 #import <objc/runtime.h>
 
@@ -21,10 +20,6 @@ static CGFloat const DefaultIFHeaderViewHeight = 200;
 
 @implementation UIScrollView (IFScrollRefresh)
 
-+ (void)load{
-    [self if_swizzleInstanceSelector:@selector(setTableHeaderView:) swizzleSelector:@selector(setIf_TableHeaderView:)];
-}
-
 // 拦截通过代码设置tableView头部视图
 - (void)setIf_TableHeaderView:(UIView *)tableHeaderView{
     // 不是UITableView,就不需要做下面的事情
@@ -32,60 +27,25 @@ static CGFloat const DefaultIFHeaderViewHeight = 200;
     
     // 设置tableView头部视图
     [self setIf_TableHeaderView:tableHeaderView];
-    
-    // 设置头部视图的位置
-    UITableView *tableView = (UITableView *)self;
-    
-    self.if_headerHeight = tableView.tableHeaderView.if_h;
 }
-
-
 
 #pragma mark - getter
 - (UIView *)if_header{
     return  (IFScrollRefreshHeader *)objc_getAssociatedObject(self, IFHeaderViewKey);
 }
 
-- (CGFloat)if_headerHeight{
-    CGFloat ifHeaderViewHeight = [objc_getAssociatedObject(self, IFHeaderViewHeightKey) floatValue];
-
-    //如果没有为if_header设置高度，那么默认返回 DefaultIFHeaderViewHeight
-    return ifHeaderViewHeight == 0 ? DefaultIFHeaderViewHeight:ifHeaderViewHeight;
-}
-
 #pragma mark - setter
 - (void)setIf_header:(IFScrollRefreshHeader *)if_header{
+    //由于这里的if_head在后面被insert到了self的subview上面，所以在采用属性修饰的时候可以采用弱引用assign
+    //如果是基本数据类型作为一个分类的属性，在被描述的时候，可能会在属性修饰符里面写着assign，但是在这里由于是给分类添加属性，所以它的传入值必须是一个id类型的，那么需要将基本数据类型进行一层OC包装，被包装后的对象是一个NSNumber类型的OC对象，所以这种情况下应当描述为retain/copy，否则在get方法里可能会因为NSValue对象的释放而取不到值，报BAD_EXEC的野指针错误。
     objc_setAssociatedObject(self, IFHeaderViewKey, if_header, OBJC_ASSOCIATION_ASSIGN);
-    if_header.if_h = self.if_headerHeight;
-    
-    if ([self isKindOfClass:[UITableView class]]) {
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, self.if_headerHeight)];
-        headerView.backgroundColor = [UIColor clearColor];
-        UITableView *tableView = (UITableView *)self;
-        tableView.tableHeaderView = headerView;
-    }
     
     [self insertSubview:if_header atIndex:0];
+    self.if_offsetY = -if_header.if_h;
+    self.contentInset = UIEdgeInsetsMake(self.if_header.if_h, 0, 0, 0);
 }
 
-- (void)setIf_headerHeight:(CGFloat)if_headerHeight{
-    objc_setAssociatedObject(self, IFHeaderViewHeightKey, @(if_headerHeight), OBJC_ASSOCIATION_ASSIGN);
-    
-}
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-//    self.if_offsetY = -10;
-    
-}
-
-//- (void)setupHeaderViewFrame
-//{
-////    self.yz_headerImageView.frame = CGRectMake(0 , 0, self.bounds.size.width , self.yz_headerScaleImageHeight);
-//    
-//    self.if_header.frame = CGRectMake(0, 0, self.if_w, 0);
-//    
-//}
 
 
 @end

@@ -10,8 +10,6 @@
 
 @interface IFScrollRefreshHeader : IFScrollRereshComponent
 
-@property (nonatomic, copy)NSArray *imgNames;
-
-+ (instancetype)headerWithFrame:(CGRect)frame;
++ (instancetype)headerWithImageNames:(NSArray *)imgNames Height:(CGFloat)height;
 
 @end

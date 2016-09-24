@@ -12,44 +12,56 @@
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+/** 所有图片的名字 */
+@property (copy, nonatomic) NSArray<NSString *> *imgNames;
 @end
 
 static CGFloat const AspectRatio = 1.183;
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self demo];
-//    [self test];
+#pragma mark - Lazy
+- (NSArray<NSString *> *)imgNames{
+    if (!_imgNames) {
+        NSMutableArray *imgNames = [NSMutableArray arrayWithCapacity:1];
+        for(NSInteger index = 1; index < 7; index++){
+            NSString *imgName = [NSString stringWithFormat:@"page%ld",index];
+            [imgNames addObject:imgName];
+        }
+        _imgNames = [imgNames copy];
+    }
+    return _imgNames;
 }
 
-- (void)test{
+#pragma mark - LifeCycle
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //为tableView添加if_header
+    self.tableView.if_header = [IFScrollRefreshHeader headerWithImageNames:self.imgNames Height:self.view.if_w / AspectRatio];
+    //为tableView添加真正的tableHeaderView
+    [self setupTableHeaderView];
+}
+
+- (void)tempDisplay{
     for (NSString *ivar in [UITableView getIvarNameList])
         NSLog(@"%@",ivar);
-
     UIView *wrapperView = [self.tableView valueForKey:@"_wrapperView"];
     NSLog(@"%@", NSStringFromCGRect(wrapperView.frame));
 }
 
-- (void)demo{
-    self.tableView.backgroundColor = [UIColor darkGrayColor];
-    
-    IFScrollRefreshHeader *ifHeader = [IFScrollRefreshHeader headerWithFrame:self.view.bounds];
-    
-    NSMutableArray *imgNames = [NSMutableArray arrayWithCapacity:1];
-    for(NSInteger index = 1; index < 7; index++){
-        NSString *imgName = [NSString stringWithFormat:@"page%ld",index];
-        [imgNames addObject:imgName];
-    }
-    ifHeader.imgNames = imgNames;
-    ifHeader.backgroundColor = [UIColor redColor];
-    self.tableView.if_headerHeight = self.view.if_w / AspectRatio;
-    self.tableView.if_header = ifHeader;
-    
-//    UIView *tableHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.if_w, 200)];
-//    tableHeader.backgroundColor = [UIColor blueColor];
-//    self.tableView.tableHeaderView = tableHeader;
+#pragma mark - Setup
+- (void)setupTableHeaderView{
+    self.tableView.backgroundColor = [UIColor grayColor];
+    UIView *tableHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.if_w, 100)];
+    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake((self.view.if_w - 210) * 0.5, 35, 210, 30)];
+    title.numberOfLines = 0;
+    title.text = @"我是打酱油的tableHeader";
+    title.textAlignment = NSTextAlignmentCenter;
+    [tableHeader addSubview:title];
+    title.layer.borderColor = [UIColor blackColor].CGColor;
+    title.layer.borderWidth = 2.0;
+    tableHeader.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableHeaderView = tableHeader;
 }
 
 #pragma mark <UITableViewDataSource>
@@ -60,11 +72,10 @@ static CGFloat const AspectRatio = 1.183;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [UITableViewCell new];
+        cell = [[UITableViewCell alloc]init];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"第%ld行：我是打酱油的数据",indexPath.row];
     return cell;
-    
 }
 
 #pragma mark <UITableViewDelegate>

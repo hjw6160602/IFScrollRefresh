@@ -11,13 +11,18 @@
 #import "IFCollectionViewController.h"
 
 @interface IFScrollRefreshHeader ()
+
+@property (nonatomic, copy)NSArray *imgNames;
+
 @property (nonatomic, strong) IFCollectionViewController *collectionViewController;
 @end
 
 @implementation IFScrollRefreshHeader
 
-+ (instancetype)headerWithFrame:(CGRect)frame{
-    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]initWithFrame:frame];
++ (instancetype)headerWithImageNames:(NSArray *)imgNames Height:(CGFloat)height{
+    IFScrollRefreshHeader *header = [[IFScrollRefreshHeader alloc]init];
+    header.imgNames = imgNames;
+    header.if_h = height;
     return header;
 }
 
@@ -66,6 +71,7 @@
     NSValue *value = [change objectForKey:@"new"];
     // 获取当前偏移量
     CGFloat offsetY = value.CGPointValue.y;
+    
 //    if (offsetY < 0)
 //        self.frame = CGRectMake(offsetY, offsetY, self.if_w - offsetY * 2, self.if_h - offsetY);
 //    else self.frame = CGRectMake(0, 0, self.if_w, self.if_h);
